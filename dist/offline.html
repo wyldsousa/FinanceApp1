@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offline - Finanças PWA</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      padding: 20px;
+    }
+    .container {
+      text-align: center;
+      max-width: 400px;
+    }
+    .icon {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 30px;
+      background: #3b82f6;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 60px;
+    }
+    h1 {
+      font-size: 28px;
+      margin-bottom: 15px;
+      font-weight: 700;
+    }
+    p {
+      font-size: 16px;
+      color: #94a3b8;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #3b82f6;
+      color: white;
+      padding: 14px 28px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .btn:hover {
+      background: #2563eb;
+      transform: translateY(-2px);
+    }
+    .status {
+      margin-top: 30px;
+      padding: 15px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      font-size: 14px;
+      color: #64748b;
+    }
+    .status.online {
+      background: rgba(34, 197, 94, 0.1);
+      color: #22c55e;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="icon">📡</div>
+    <h1>Você está offline</h1>
+    <p>Parece que você perdeu a conexão com a internet. Verifique sua conexão e tente novamente.</p>
+    <button class="btn" onclick="window.location.reload()">
+      🔄 Tentar novamente
+    </button>
+    <div class="status" id="status">
+      Aguardando conexão...
+    </div>
+  </div>
+
+  <script>
+    // Check online status
+    function updateOnlineStatus() {
+      const statusEl = document.getElementById('status');
+      if (navigator.onLine) {
+        statusEl.textContent = 'Conexão restaurada! Redirecionando...';
+        statusEl.classList.add('online');
+        setTimeout(() => {
+          window.location.href = '/';
+        }, 1500);
+      }
+    }
+
+    window.addEventListener('online', updateOnlineStatus);
+    window.addEventListener('offline', updateOnlineStatus);
+
+    // Check periodically
+    setInterval(updateOnlineStatus, 3000);
+  </script>
+</body>
+</html>
